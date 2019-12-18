@@ -1,0 +1,43 @@
+.list{
+    display: grid;
+    border: 1px #dedede solid;    
+}
+
+.list-header{
+    display: grid;
+    grid-template-columns: 250px 100px;
+    height: 20px;
+    padding: 10px;
+    background: #cac6c6;
+}
+
+.list-header__cell{
+    text-align: start;
+    align-self: center;
+}
+
+.sort-by-asc
+{
+    left: 3px;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border: solid 5px transparent;
+    margin: 4px 4px 0 3px;
+    background: transparent;
+    border-bottom: solid 7px #000;
+    border-top-width: 0;
+}
+
+.sort-by-desc
+{
+    left: 3px;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border: solid 5px transparent;
+    margin: 4px 4px 0 3px;
+    background: transparent;
+    border-top: solid 7px #000;
+    border-bottom-width: 0;
+}

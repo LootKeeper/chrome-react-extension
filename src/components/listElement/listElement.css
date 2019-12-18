@@ -1,0 +1,28 @@
+.element{
+    display: grid;
+    grid-template-areas: "name size";
+    grid-template-columns: 250px 100px;
+    column-gap: 5px;
+    height: 30px;
+    padding: 10px;
+}
+
+.element:nth-child(2n+3){
+    background: #ececec;
+}
+
+.element-name{    
+    align-self: center;
+    grid-area: name;
+    text-align: start;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.element-size{
+    grid-area: size;
+    align-self: center;
+    text-align: start;
+}

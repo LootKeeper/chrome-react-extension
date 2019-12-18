@@ -1,0 +1,14 @@
+.menu{
+    display: grid;
+    grid-template-areas: "actions filter";
+}
+
+.menu__actions{
+    grid-area: actions;
+    justify-self: start;
+}
+
+.menu__row-filter{
+    grid-area: filter;
+    justify-self: end;
+}
