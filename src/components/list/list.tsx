@@ -2,53 +2,45 @@ import * as React from 'react';
 import { Image } from '../../models/Image';
 import { ListElement } from '../listElement/listElement';
 import './list.css';
-import { SortType, SortBy, ImgSorter } from '../../helpers/imageSorters';
+import { SortFilter, SortBy, SortType } from '../../models/sortFilter';
 
 export interface ListProps{
-    images: Image[]
+    images: Image[],
+    filter: SortFilter,
+    handleFilterChange: Function
 }
 
-export interface ListState{
-    sortBy: SortBy;
-    sortType: SortType;
-}
-
-export class List extends React.Component<ListProps, ListState>{
+export class List extends React.Component<ListProps, {}>{
 
     constructor(props: ListProps){
         super(props);
-        this.state ={
-            sortBy: SortBy.size,
-            sortType: SortType.desc
-        }
     }
 
     _resort(sortBy: SortBy){
-        let newSortType = this.state.sortType === SortType.asc ? SortType.desc : SortType.asc;
-        this.setState({
-            sortBy: sortBy,
-            sortType: newSortType
-        });
+        let newSortType = this.props.filter.sortType === SortType.asc ? SortType.desc : SortType.asc;
+        const filter = new SortFilter(sortBy, newSortType);
+        this.props.handleFilterChange(filter);
     }
 
     render(){
-        const images = ImgSorter(this.props.images, this.state.sortType, this.state.sortBy);
-        const sortArrowStyle = this.state.sortType == SortType.asc ? 'sort-by-asc' : 'sort-by-desc';
+        const filter = this.props.filter;
+        const images = this.props.images;
+        const sortArrowStyle = filter.sortType == SortType.asc ? 'sort-by-asc' : 'sort-by-desc';
         
-        const imgList = images.length > 0 ? images.map(image => <ListElement key={image.id} image={image} />) : <span>Images doesn\'t found on this page.</span>
+        const imgList = images && images.length > 0 ? images.map((image: Image ) => <ListElement key={image.id} image={image} />) : <span>Images doesn\'t found on this page.</span>
 
         return(
             <div className="list">
                 <div className="list-header">
                     <div className="list-header__cell">
                         <span>
-                            {this.state.sortBy === SortBy.name && <i className={sortArrowStyle}></i>}
+                            {filter.sortBy === SortBy.name && <i className={sortArrowStyle}></i>}
                             <a onClick={()=> this._resort(SortBy.name)}>Name</a>
                         </span>
                     </div>
                     <div className="list-header__cell">
                         <span>
-                        {this.state.sortBy === SortBy.size && <i className={sortArrowStyle}></i>}
+                        {filter.sortBy === SortBy.size && <i className={sortArrowStyle}></i>}
                             <a onClick={()=>this._resort(SortBy.size)}>Size</a>
                         </span>
                     </div>

@@ -5,4 +5,5 @@
     top: 0px;
     background: #04040447; 
     border: none;
+    z-index: 999999;
 }
