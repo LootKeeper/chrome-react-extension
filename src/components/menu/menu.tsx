@@ -3,23 +3,18 @@ import { RowFilter } from '../rowFilter/rowFilter';
 import { MenuActions } from '../menuActions/menuActions';
 import './menu.css';
 
-export interface MenuProps{
+export interface IMenuProps {
     handleDownloadAll: Function,
     handleRowChanges: Function,
     rows: number
 }
 
-export class Menu extends React.Component<MenuProps, {}> {
-    render() {
-        return (
-            <div className="menu">
-                <div className="menu__actions">
-                   <MenuActions handleDownloadAll={this.props.handleDownloadAll}/>
-                </div>
-                <div className="menu__row-filter">
-                    <RowFilter rows={this.props.rows} notifyOnChangesRows={(e: number) => this.props.handleRowChanges(e)} />
-                </div>
-            </div>
-        );
-    }
-}
+export const Menu = (props: IMenuProps) =>
+    <div className="menu">
+        <div className="menu__actions">
+            <MenuActions handleDownloadAll={props.handleDownloadAll} />
+        </div>
+        <div className="menu__row-filter">
+            <RowFilter rows={props.rows} notifyOnChangesRows={(e: number) => props.handleRowChanges(e)} />
+        </div>
+    </div>

@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
-import { img } from './img';
-import { imgFilter } from './imgFilter';
+import { images } from './images';
+import { imagesFilter } from './imagesFilter';
 import { settings } from './settings'
 
 export default combineReducers({
-    img,
-    imgFilter,
+    images: images,
+    imagesFilter: imagesFilter,
     settings
 })

@@ -2,6 +2,7 @@ import { SortFilter } from "../../models/sortFilter"
 import { Image } from "../../models/Image"
 import { getRowsCountSetting } from "../../helpers/settings";
 import { imageSearch } from "../../helpers/imageSearcher";
+import { IActionInfo, IAction } from "../../models/action";
 
 export enum ActionType {    
     SetSortFilter = 'SET_ROWS_FILTER',
@@ -14,17 +15,17 @@ export enum ActionType {
     SetRowsValue = 'SET_ROWS_VALUE'
 }
 
-export const setSortFilter = (filter: SortFilter) =>({
+export const setSortFilter = (filter: SortFilter) : IActionInfo<SortFilter> =>({
     type: ActionType.SetSortFilter,
-    filter
+    value: filter
 })
 
-export const imagesReceived = (images: Image[]) => ({
+export const imagesReceived = (images: Image[]) : IActionInfo<Image[]> => ({
     type: ActionType.ImagesReceived,
-    images
+    value: images
 })
 
-export const requestImages = () => ({
+export const requestImages = () : IAction => ({
     type: ActionType.RequestImages
 });
 
@@ -36,22 +37,22 @@ export interface SetSortFilter{
     (filter: SortFilter): void;
 }
 
-export const setRowsValue = (rows: number) => ({
+export const setRowsValue = (rows: number) : IActionInfo<number> => ({
     type: ActionType.SetRowsValue,
-    rows
+    value: rows
 })
 
-export const requestRowsValue = () => ({
+export const requestRowsValue = () : IAction => ({
     type: ActionType.RequestRowsValue
 })
 
-export const RowsValueReceived = (rows: number) => ({
+export const rowsValueReceived = (rows: number) : IActionInfo<number> => ({
     type: ActionType.RowsValueReceived,
-    rows
+    value: rows
 })
 
 export function receiveRowCountSettings(){
-    return function(dispatch){
+    return function(dispatch: Function){
         dispatch(requestRowsValue());
         return getRowsCountSetting().then(rows =>{ 
             dispatch(setRowsValue(rows))
@@ -60,7 +61,7 @@ export function receiveRowCountSettings(){
 }
 
 export function receiveImages(excludeNodes: Node[]){
-    return function(dispatch){
+    return function(dispatch: Function){
         dispatch(requestImages());
         return imageSearch(excludeNodes).then((images: Image[]) =>{ 
             dispatch(imagesReceived(images))

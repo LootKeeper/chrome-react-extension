@@ -1,6 +1,6 @@
 export async function getRowsCountSetting(): Promise<number> {
     return new Promise(resolve => {
-        chrome.storage.sync.get(['rows'], (value) => {
+        chrome.storage.sync.get(['rows'], (value: any) => {
             if (value && value.rows) {
                 resolve(value.rows);
             } else {

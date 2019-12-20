@@ -8,6 +8,7 @@ import { SortFilter } from '../../models/sortFilter';
 import { connect } from 'react-redux'
 import { State } from '../../models/state';
 import { imageSorter } from '../../helpers/imageSorters';
+import './ImgGrabber.css';
 
 
 export interface ImgGrabberProps {
@@ -46,7 +47,7 @@ class ImgGrabber extends React.Component<ImgGrabberProps, {}> {
     }
 
     _handleDownloadAll() {
-        this.state.images.forEach(image => {
+        this.props.images.forEach(image => {
             const request = { type: 'downloadImage', image: image };
             chrome.runtime.sendMessage(request);
         });
@@ -54,10 +55,6 @@ class ImgGrabber extends React.Component<ImgGrabberProps, {}> {
 
     _closeHandler() {
         toggleVisibility(this.props.parentElement);
-    }
-
-    _handleRowChanges(value: number) {
-        this.props.setRowsValue(value);
     }
 
     render() {
@@ -69,7 +66,7 @@ class ImgGrabber extends React.Component<ImgGrabberProps, {}> {
                         <div className="menu-container">
                             <Menu
                                 handleDownloadAll={() => this._handleDownloadAll()}
-                                handleRowChanges={(e: number) => this._handleRowChanges(e)}
+                                handleRowChanges={(e: number) => this.props.setRowsValue(e)}
                                 rows={this.props.rows} />
                         </div>
                         <div className="list-container">
@@ -94,9 +91,9 @@ const filterImages = (images: Image[], rows: number, filter: SortFilter) => {
 
 const mapStateToProps = (state: State) =>{
     return {
-        filter: state.imgFilter.filter,
+        filter: state.imagesFilter.filter,
         rows: state.settings.rows,
-        images: filterImages(state.img.images, state.settings.rows, state.imgFilter.filter)
+        images: filterImages(state.images.items, state.settings.rows, state.imagesFilter.filter)
     }
 }
 

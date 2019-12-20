@@ -1,15 +1,10 @@
 import * as React from 'react';
 
-export interface MenuActionsProps{
+export interface IMenuActionsProps {
     handleDownloadAll: Function
 }
 
-export class MenuActions extends React.Component<MenuActionsProps, {}>{
-    render(){
-        return(
-            <React.Fragment>
-                <button onClick={() => { this.props.handleDownloadAll() }}>Download All</button>
-            </React.Fragment>
-        )
-    }
-}
+export const MenuActions = (props: IMenuActionsProps) =>
+    <React.Fragment>
+        <button onClick={() => { props.handleDownloadAll() }}>Download All</button>
+    </React.Fragment>

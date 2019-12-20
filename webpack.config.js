@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -33,5 +34,14 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: 'bundle.css'
         })
-    ]
+    ],
+    optimization: {
+        minimizer: [
+            new TerserPlugin({
+                cache: true,
+                parallel: true,
+                sourceMap: false
+            })
+        ]
+    }
 }

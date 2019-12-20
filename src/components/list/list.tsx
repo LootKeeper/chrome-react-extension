@@ -4,17 +4,13 @@ import { ListElement } from '../listElement/listElement';
 import './list.css';
 import { SortFilter, SortBy, SortType } from '../../models/sortFilter';
 
-export interface ListProps{
+export interface IListProps{
     images: Image[],
     filter: SortFilter,
     handleFilterChange: Function
 }
 
-export class List extends React.Component<ListProps, {}>{
-
-    constructor(props: ListProps){
-        super(props);
-    }
+export class List extends React.Component<IListProps, {}>{
 
     _resort(sortBy: SortBy){
         let newSortType = this.props.filter.sortType === SortType.asc ? SortType.desc : SortType.asc;
@@ -35,13 +31,13 @@ export class List extends React.Component<ListProps, {}>{
                     <div className="list-header__cell">
                         <span>
                             {filter.sortBy === SortBy.name && <i className={sortArrowStyle}></i>}
-                            <a onClick={()=> this._resort(SortBy.name)}>Name</a>
+                            <a href="#" onClick={()=> this._resort(SortBy.name)}>Name</a>
                         </span>
                     </div>
                     <div className="list-header__cell">
                         <span>
                         {filter.sortBy === SortBy.size && <i className={sortArrowStyle}></i>}
-                            <a onClick={()=>this._resort(SortBy.size)}>Size</a>
+                            <a href="#" onClick={()=>this._resort(SortBy.size)}>Size</a>
                         </span>
                     </div>
                 </div>

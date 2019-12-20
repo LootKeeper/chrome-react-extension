@@ -2,16 +2,16 @@ import { Image } from "./Image";
 import { SortFilter } from "./sortFilter";
 
 export class State{
-    public img: ImgState;
-    public imgFilter: ImgFilterState;    
+    public images: ImagesState;
+    public imagesFilter: ImagesFilterState;    
     public settings: SettingsState;
 }
 
-export class ImgState{
-    constructor(public isFetching: boolean, public images: Image[]){}
+export class ImagesState{
+    constructor(public isFetching: boolean, public items: Image[]){}
 }
 
-export class ImgFilterState{
+export class ImagesFilterState{
     constructor(public filter: SortFilter){}
 }
 
