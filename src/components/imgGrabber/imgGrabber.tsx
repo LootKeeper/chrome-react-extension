@@ -17,6 +17,7 @@ export interface ImgGrabberProps {
     setSortFilter: SetSortFilter,
     filter: SortFilter,
     images: Image[],
+    imagesFetching: boolean,
     rows: number,
     getRowsCount: Function,
     getImages: Function
@@ -31,18 +32,18 @@ class ImgGrabber extends React.Component<ImgGrabberProps, {}> {
     constructor(props: ImgGrabberProps) {
         super(props);
         this._mainNodeRef = React.createRef();
-    }    
+    }
 
     componentDidMount() {
         this._getRowSettings();
-        this._imgSearch();        
-    }   
-    
+        this._imgSearch();
+    }
+
     _getRowSettings() {
         this.props.getRowsCount();
     }
 
-    _imgSearch(){
+    _imgSearch() {
         this.props.getImages([this._mainNodeRef.current]);
     }
 
@@ -58,7 +59,20 @@ class ImgGrabber extends React.Component<ImgGrabberProps, {}> {
     }
 
     render() {
-        const images = this.props.images;
+
+        let imagesList;
+
+        if (this.props.imagesFetching) {
+            imagesList = <p>Loading...</p>
+        } else {
+            const images = this.props.images;
+
+            imagesList = <List
+                images={images}
+                handleFilterChange={(filter: SortFilter) => this.props.setSortFilter(filter)}
+                filter={this.props.filter} />
+        }
+
         return (
             <div id="main" ref={this._mainNodeRef} className="app">
                 <div className="content">
@@ -70,10 +84,7 @@ class ImgGrabber extends React.Component<ImgGrabberProps, {}> {
                                 rows={this.props.rows} />
                         </div>
                         <div className="list-container">
-                            <List 
-                                images={images} 
-                                handleFilterChange={(filter: SortFilter) => this.props.setSortFilter(filter)} 
-                                filter={this.props.filter} />
+                            {imagesList}
                         </div>
                     </div>
                     <div className="header">
@@ -89,26 +100,27 @@ const filterImages = (images: Image[], rows: number, filter: SortFilter) => {
     return imageSorter(images.slice(0, rows), filter);
 }
 
-const mapStateToProps = (state: State) =>{
+const mapStateToProps = (state: State) => {
     return {
         filter: state.imagesFilter.filter,
         rows: state.settings.rows,
-        images: filterImages(state.images.items, state.settings.rows, state.imagesFilter.filter)
+        images: filterImages(state.images.items, state.settings.rows, state.imagesFilter.filter),
+        imagesFetching: state.images.isFetching
     }
 }
 
-const mapDispatchToProps = (dispatch: Function) =>{
+const mapDispatchToProps = (dispatch: Function) => {
     return {
-        setRowsValue: (rows: number) =>{
+        setRowsValue: (rows: number) => {
             dispatch(setRowsValue(rows))
         },
-        setSortFilter: (filter: SortFilter) =>{
+        setSortFilter: (filter: SortFilter) => {
             dispatch(setSortFilter(filter));
         },
-        getRowsCount: () =>{
+        getRowsCount: () => {
             dispatch(receiveRowCountSettings());
         },
-        getImages: (excludeNodes: Node[]) =>{
+        getImages: (excludeNodes: Node[]) => {
             dispatch(receiveImages(excludeNodes))
         }
     }

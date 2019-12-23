@@ -15,10 +15,6 @@ export async function imageSearch(excludeNode: Node[]): Promise<Image[]> {
     })
 }
 
-async function _parseImg(id: number, imgNode: Node): Promise<Image> {
-    return await imageParser(id, imgNode);
-}
-
 function _nodeFilter(node: Node, excludeNode: Node[]): number {
     if (excludeNode.includes(node)) {
         return NodeFilter.FILTER_REJECT;
@@ -28,4 +24,8 @@ function _nodeFilter(node: Node, excludeNode: Node[]): number {
     }
 
     return NodeFilter.FILTER_SKIP;
+}
+
+async function _parseImg(id: number, imgNode: Node): Promise<Image> {
+    return await imageParser(id, imgNode);
 }
