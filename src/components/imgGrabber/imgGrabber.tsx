@@ -59,20 +59,6 @@ class ImgGrabber extends React.Component<ImgGrabberProps, {}> {
     }
 
     render() {
-
-        let imagesList;
-
-        if (this.props.imagesFetching) {
-            imagesList = <p>Loading...</p>
-        } else {
-            const images = this.props.images;
-
-            imagesList = <List
-                images={images}
-                handleFilterChange={(filter: SortFilter) => this.props.setSortFilter(filter)}
-                filter={this.props.filter} />
-        }
-
         return (
             <div id="main" ref={this._mainNodeRef} className="app">
                 <div className="content">
@@ -84,7 +70,12 @@ class ImgGrabber extends React.Component<ImgGrabberProps, {}> {
                                 rows={this.props.rows} />
                         </div>
                         <div className="list-container">
-                            {imagesList}
+                            {this.props.imagesFetching ? 
+                                <p>Loading...</p> :                                 
+                                <List
+                                images={this.props.images}
+                                handleFilterChange={(filter: SortFilter) => this.props.setSortFilter(filter)}
+                                filter={this.props.filter} />}
                         </div>
                     </div>
                     <div className="header">
