@@ -3,18 +3,17 @@ import { Image } from '../../models/Image';
 import { toggleVisibility } from '../..';
 import { Menu } from '../menu/menu';
 import { List } from '../list/list';
-import { setRowsValue, setSortFilter, SetRowsValue, SetSortFilter, receiveRowCountSettings, receiveImages } from '../../redux/actions/actions';
+import { setRowsValue, setSortFilter, ISetRowsValue, ISetSortFilter, receiveRowCountSettings, receiveImages } from '../../redux/actions/actions';
 import { SortFilter } from '../../models/sortFilter';
 import { connect } from 'react-redux'
 import { State } from '../../models/state';
 import { imageSorter } from '../../helpers/imageSorters';
 import './ImgGrabber.css';
 
-
 export interface ImgGrabberProps {
     parentElement: HTMLDivElement,
-    setRowsValue: SetRowsValue,
-    setSortFilter: SetSortFilter,
+    setRowsValue: ISetRowsValue,
+    setSortFilter: ISetSortFilter,
     filter: SortFilter,
     images: Image[],
     imagesFetching: boolean,
@@ -22,8 +21,6 @@ export interface ImgGrabberProps {
     getRowsCount: Function,
     getImages: Function
 }
-
-const defaultRows: number = 10;
 
 class ImgGrabber extends React.Component<ImgGrabberProps, {}> {
 

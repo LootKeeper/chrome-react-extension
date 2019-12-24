@@ -15,12 +15,20 @@ export enum ActionType {
     SetRowsValue = 'SET_ROWS_VALUE'
 }
 
-export const setSortFilter = (filter: SortFilter) : IActionInfo<SortFilter> =>({
+export interface ISetSortFilter{
+    (filter: SortFilter): void;
+}
+
+export const setSortFilter: ISetSortFilter = (filter: SortFilter) : IActionInfo<SortFilter> =>({
     type: ActionType.SetSortFilter,
     value: filter
 })
 
-export const imagesReceived = (images: Image[]) : IActionInfo<Image[]> => ({
+export interface IImageReceived{
+    (images: Image[]): void;
+}
+
+export const imagesReceived: IImageReceived = (images: Image[]) : IActionInfo<Image[]> => ({
     type: ActionType.ImagesReceived,
     value: images
 })
@@ -29,15 +37,11 @@ export const requestImages = () : IAction => ({
     type: ActionType.RequestImages
 });
 
-export interface SetRowsValue{
+export interface ISetRowsValue{
     (rows: number): void;
 }
 
-export interface SetSortFilter{
-    (filter: SortFilter): void;
-}
-
-export const setRowsValue = (rows: number) : IActionInfo<number> => ({
+export const setRowsValue : ISetRowsValue = (rows: number) : IActionInfo<number> => ({
     type: ActionType.SetRowsValue,
     value: rows
 })
@@ -51,7 +55,7 @@ export const rowsValueReceived = (rows: number) : IActionInfo<number> => ({
     value: rows
 })
 
-export function receiveRowCountSettings(){
+export const receiveRowCountSettings = () => {
     return function(dispatch: Function){
         dispatch(requestRowsValue());
         return getRowsCountSetting().then(rows =>{ 
@@ -60,7 +64,11 @@ export function receiveRowCountSettings(){
     }
 }
 
-export function receiveImages(excludeNodes: Node[]){
+export interface IReceiveImages{
+    (excludeNodes: Node[]): void
+}
+
+export const receiveImages : IReceiveImages = (excludeNodes: Node[]) =>{
     return function(dispatch: Function){
         dispatch(requestImages());
         return imageSearch(excludeNodes).then((images: Image[]) =>{ 

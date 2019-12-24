@@ -15,8 +15,6 @@ export interface IAppProps {
     parentElement: HTMLDivElement
 }
 
-const defaultRows: number = 10;
-
 const App = (props: IAppProps) =>
     <Frame style={{ border: 'none', width: '100%', height: '100%', display: 'unset' }} head={[<link type="text/css" rel="stylesheet" href={chrome.runtime.getURL("bundle.css")} ></link>]}>
         <Provider store={store}>
